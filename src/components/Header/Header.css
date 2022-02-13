@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 2rem;
+  transform: translateX(-50%);
+}
