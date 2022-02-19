@@ -1,7 +1,7 @@
 import { useImperativeHandle, useState, forwardRef } from 'react'
 import { Button } from '../Button/Button'
 import { Space } from '../Space/Space'
-import './UserCredentialForm.css'
+import classes from './UserCredentialForm.module.css'
 
 const UserCredentialForm = forwardRef(
   ({ onSubmit, isUsedForRegister = false }, ref) => {
@@ -19,7 +19,7 @@ const UserCredentialForm = forwardRef(
 
     return (
       <form
-        className="form"
+        className={classes.form}
         onSubmit={(e) => {
           e.preventDefault()
 
@@ -39,7 +39,7 @@ const UserCredentialForm = forwardRef(
       >
         {isUsedForRegister ? (
           <>
-            <div className="field">
+            <div className={classes.field}>
               <label htmlFor="name">Name</label>
               <Space height="4px" />
               <input
@@ -53,7 +53,7 @@ const UserCredentialForm = forwardRef(
           </>
         ) : null}
 
-        <div className="field">
+        <div className={classes.field}>
           <label htmlFor="email">Email</label>
           <Space height="4px" />
           <input
@@ -66,7 +66,7 @@ const UserCredentialForm = forwardRef(
 
         <Space height="10px" />
 
-        <div className="field">
+        <div className={classes.field}>
           <label htmlFor="password">Password</label>
           <Space height="4px" />
           <input
@@ -79,7 +79,7 @@ const UserCredentialForm = forwardRef(
 
         <Space height="32px" />
 
-        <div className="field">
+        <div className={classes.field}>
           <Button>Submit</Button>
         </div>
       </form>

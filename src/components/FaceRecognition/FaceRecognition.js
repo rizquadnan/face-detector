@@ -1,4 +1,4 @@
-import './FaceRecognition.css'
+import classes from './FaceRecognition.module.css'
 import { useClarifaiFaceBoundingBoxes } from '../../modules/useClarifai.js'
 import { Space } from '../Space/Space'
 import { memo } from 'react'
@@ -19,7 +19,7 @@ const FaceRecognition = memo(({ imageUrl, onClear, afterSuccessCallback }) => {
 
   if (apiState === 'ERROR') {
     return (
-      <div className="container">
+      <div className={classes.container}>
         <p>Sorry, something went wrong. Is your image url valid ? </p>
         <Space style={{ height: '1rem' }} />
         <button onClick={onClickClear}>Clear</button>
@@ -29,11 +29,11 @@ const FaceRecognition = memo(({ imageUrl, onClear, afterSuccessCallback }) => {
 
   if (apiState === 'SUCCESS' && boundingBoxes !== null) {
     return (
-      <div className="container">
-        <div className="image-container">
+      <div className={classes.container}>
+        <div className={classes['image-container']}>
           {boundingBoxes.map((boundingBox) => (
             <div
-              className="face-indicator-box"
+              className={classes['face-indicator-box']}
               style={{
                 top: `${boundingBox.top_row * 100}%`,
                 bottom: `${100 - boundingBox.bottom_row * 100}%`,

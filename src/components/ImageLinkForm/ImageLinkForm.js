@@ -1,5 +1,5 @@
 import { Button } from '../Button/Button';
-import './ImageLinkForm.css'
+import classes from './ImageLinkForm.module.css'
 
 const ImageLinkForm = ({ onInput, onSubmit }) => {
   const onChangeInput = (e) => {
@@ -14,15 +14,15 @@ const ImageLinkForm = ({ onInput, onSubmit }) => {
 
   return (
     <form>
-      <div className='titleContainer'>
-        <h1 className="title">
+      <div className={classes.titleContainer}>
+        <h1 className={classes.title}>
           The magic brain will detect faces in your image. Paste a image link
           here
         </h1>
       </div>
 
-      <div className="input-container">
-        <input type="text" className="input-text" onChange={onChangeInput}/>
+      <div className={classes['input-container']}>
+        <input type="text" className={classes['input-text']} onChange={onChangeInput}/>
         <Button onClick={onClickSubmit}>Detect</Button>
       </div>
     </form>
