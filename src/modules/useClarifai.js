@@ -33,8 +33,6 @@ function useClarifaiFaceBoundingBoxes(imageUrl, afterSuccessCallback) {
       })
       .catch((error) => {
         setState("ERROR");
-
-        console.log('error', error)
       })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

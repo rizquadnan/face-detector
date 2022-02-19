@@ -20,7 +20,6 @@ function Home() {
   const fetch = useFetch()
 
   const token = useContext(TokenContext);
-  console.log(user);
 
   const navigate = useNavigate()
 
