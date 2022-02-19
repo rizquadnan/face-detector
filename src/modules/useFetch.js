@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://madnanrizqullah-face-detector.herokuapp.com/api/v1/'
+import { API_BASE_URL } from "../config";
 
 function useFetch() {
   const defaultHeaders = {
