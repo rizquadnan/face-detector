@@ -16,8 +16,7 @@ const ImageLinkForm = ({ onInput, onSubmit }) => {
     <form>
       <div className={classes.titleContainer}>
         <h1 className={classes.title}>
-          The magic brain will detect faces in your image. Paste a image link
-          here
+          Detect faces! Paste an image link here
         </h1>
       </div>
 
