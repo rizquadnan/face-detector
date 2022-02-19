@@ -4,11 +4,10 @@ import { ErrorMessage } from "../components/ErrorMessage/ErrorMessage";
 import { TokenSetContext } from "../components/TokenProvider/TokenProvider";
 import { UserCredentialForm } from "../components/UserCredentialForm/UserCredentialForm"
 import { UserSetContext } from "../components/UserProvider/UserProvider";
-import { useFetch } from "../modules/useFetch";
+import { useRemoteService } from "../modules/useRemoteService";
 
 function Register() {
   const navigate = useNavigate();
-  const fetch = useFetch();
   const formRef = useRef();
 
   const setUser = useContext(UserSetContext);
@@ -16,6 +15,24 @@ function Register() {
   const setToken = useContext(TokenSetContext);
 
   const [error, setError] = useState(null);
+
+  const signUpService = useRemoteService(
+    'register',
+    { method: 'POST' },
+    {
+      successCallback: ({ status, data: { user, token }, description }) => {
+        if (status === 'SUCCESS') {
+          setUser(user)
+          setToken(token)
+
+          navigate('/home')
+        } else {
+          setError(description);
+          formRef.current.clearForm()
+        }
+      },
+    },
+  )
 
   return (
     <section>
@@ -25,33 +42,17 @@ function Register() {
       
       <UserCredentialForm
         ref={formRef}
+        isLoading={signUpService.status === "LOADING"}
         isUsedForRegister={true}
         onSubmit={({ name, email, password }) => {
           if (!email || !password || !name) {
             setError("Input not valid");
             return;
           }
-          
-          fetch('register', {
-            method: 'POST',
-            body: JSON.stringify({
-              name,
-              email,
-              password,
-            }),
-          })
-            .then((response) => response.json())
-            .then(({ status, data: { user, token }, description }) => {
-              if (status === "SUCCESS") {
-                setUser(user);
-                setToken(token);
 
-                navigate("/home")
-              } else {
-                setError(description);
-                formRef.current.clearForm();
-              }
-            })
+          signUpService.execute({ name,
+            email,
+            password })
         }}
       />
     </section>

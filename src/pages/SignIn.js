@@ -1,22 +1,38 @@
 import { Link } from 'react-router-dom'
 import { UserCredentialForm } from '../components/UserCredentialForm/UserCredentialForm'
-import { useNavigate } from "react-router-dom";
-import { useContext, useRef, useState } from 'react';
-import { useFetch } from '../modules/useFetch';
-import { UserSetContext } from '../components/UserProvider/UserProvider';
-import { TokenSetContext } from '../components/TokenProvider/TokenProvider';
-import { ErrorMessage } from '../components/ErrorMessage/ErrorMessage';
+import { useNavigate } from 'react-router-dom'
+import { useContext, useRef, useState } from 'react'
+import { UserSetContext } from '../components/UserProvider/UserProvider'
+import { TokenSetContext } from '../components/TokenProvider/TokenProvider'
+import { ErrorMessage } from '../components/ErrorMessage/ErrorMessage'
+import { useRemoteService } from '../modules/useRemoteService'
 
 function SignIn() {
-  const navigate = useNavigate();
-  const formRef = useRef();
-  const fetch = useFetch();
+  const navigate = useNavigate()
+  const formRef = useRef()
 
-  const setUser = useContext(UserSetContext);
+  const setUser = useContext(UserSetContext)
 
-  const setToken = useContext(TokenSetContext);
+  const setToken = useContext(TokenSetContext)
 
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null)
+
+  const signInService = useRemoteService(
+    'sign-in',
+    { method: 'POST' },
+    {
+      successCallback: ({ status, data: { user, token } }) => {
+        if (status === 'SUCCESS') {
+          setUser(user)
+          setToken(token)
+
+          navigate('/home')
+        } else {
+          formRef.current.clearForm()
+        }
+      },
+    },
+  )
 
   return (
     <section>
@@ -31,30 +47,14 @@ function SignIn() {
 
       <UserCredentialForm
         ref={formRef}
+        isLoading={signInService.status === 'LOADING'}
         onSubmit={({ email, password }) => {
           if (!email || !password) {
-            setError("Input not valid");
-            return;
+            setError('Input not valid')
+            return
           }
-        
-          fetch('sign-in', {
-            method: 'POST',
-            body: JSON.stringify({
-              email,
-              password,
-            }),
-          })
-            .then((response) => response.json())
-            .then(({ status, data: { user, token } }) => {
-              if (status === "SUCCESS") {
-                setUser(user);
-                setToken(token);
-                
-                navigate("/home")
-              } else {
-                formRef.current.clearForm();
-              }
-            })
+
+          signInService.execute({ email, password })
         }}
       />
     </section>

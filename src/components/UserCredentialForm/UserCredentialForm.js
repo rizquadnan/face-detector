@@ -4,7 +4,7 @@ import { Space } from '../Space/Space'
 import classes from './UserCredentialForm.module.css'
 
 const UserCredentialForm = forwardRef(
-  ({ onSubmit, isUsedForRegister = false }, ref) => {
+  ({ onSubmit, isLoading = false, isUsedForRegister = false }, ref) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -80,7 +80,7 @@ const UserCredentialForm = forwardRef(
         <Space height="32px" />
 
         <div className={classes.field}>
-          <Button>Submit</Button>
+          <Button isDisabled={isLoading}>{isLoading ? "Loading..." : "Submit"}</Button>
         </div>
       </form>
     )
