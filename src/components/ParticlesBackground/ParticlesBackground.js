@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Particles from "react-tsparticles";
 import options from "./config.json";
 
@@ -19,7 +20,7 @@ export const particleOptions = {
   }
 };
 
-const ParticlesBackground = ({ children }) => {
+const ParticlesBackground = memo(({ children }) => {
   return (
     <>
       <div style={{ position: "relative", zIndex: -1 }}>
@@ -31,6 +32,6 @@ const ParticlesBackground = ({ children }) => {
       { children }
     </>
   )
-};
+});
 
 export { ParticlesBackground };
