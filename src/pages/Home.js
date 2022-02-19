@@ -1,6 +1,5 @@
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react/cjs/react.development'
 import { Button } from '../components/Button/Button'
 import { FaceRecognition } from '../components/FaceRecognition/FaceRecognition'
 import { ImageLinkForm } from '../components/ImageLinkForm/ImageLinkForm'
